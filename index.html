@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ختمە - قورئانی زیرەک</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fffbf2;
+            --main-color: #2c3e50;
+            --accent-color: #d4af37; /* ڕەنگی ئاڵتونی */
+            --highlight-color: #e8f5e9;
+            --text-active: #1b5e20;
+        }
+
+        body {
+            font-family: 'Amiri', serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* چوارچێوەی سەرەکی */
+        .app-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            height: 100vh;
+            position: relative;
+        }
+
+        /* بەشی سەرەوە (Nav) */
+        .top-bar {
+            background: white;
+            padding: 15px;
+            border-bottom: 3px solid var(--accent-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        select {
+            font-family: 'Amiri', serif;
+            font-size: 18px;
+            padding: 5px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        /* ناوەڕۆکی قورئان */
+        .quran-content {
+            flex-grow: 1;
+            padding: 20px 30px;
+            overflow-y: auto;
+            text-align: justify;
+            font-size: 26px;
+            line-height: 2.4;
+            scroll-behavior: smooth;
+        }
+
+        /* دیزاینی بەسمەلە */
+        .basmala {
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+
+        /* دیزاینی ئایەت */
+        .ayah {
+            display: inline;
+            padding: 4px 6px;
+            border-radius: 6px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .ayah-number {
+            color: var(--accent-color);
+            font-size: 18px;
+            border: 1px solid var(--accent-color);
+            border-radius: 50%;
+            padding: 0 8px;
+            margin: 0 5px;
+            font-family: sans-serif;
+            display: inline-block;
+        }
+
+        /* ئایەتی چالاک (ئەوەی دەیخوێنیت) */
+        .active {
+            background-color: var(--highlight-color);
+            color: var(--text-active);
+            transform: scale(1.02);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            font-weight: bold;
+        }
+
+        /* بەشی کۆنتڕۆڵ (خوارەوە) */
+        .controls {
+            background: white;
+            padding: 15px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status {
+            font-size: 14px;
+            color: #666;
+            flex-grow: 1;
+            text-align: right;
+            padding-right: 15px;
+        }
+
+        .mic-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Amiri', serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.3s;
+        }
+
+        .mic-btn.listening {
+            background-color: #e74c3c;
+            animation: pulse 2s infinite;
+        }
+
+        /* لۆدینگ */
+        .loader {
+            display: none;
+            color: var(--accent-color);
+            font-weight: bold;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+
+        /* مۆبایل */
+        @media (max-width: 600px) {
+            .quran-content { font-size: 20px; padding: 15px; }
+            .top-bar { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="top-bar">
+            <div><strong>القرآن الكريم</strong></div>
+            <select id="surahSelect" onchange="changeSurah(this.value)">
+                <option value="" disabled selected>بارکردنی سورەتەکان...</option>
+            </select>
+        </div>
+
+        <div class="quran-content" id="quranText">
+            <div class="loader" id="loader">جاری بارکردنی سورەتەکە...</div>
+            <div id="ayahs-container">
+                </div>
+        </div>
+
+        <div class="controls">
+            <div class="status" id="statusMsg">ئامادەیە بۆ گوێگرتن</div>
+            <button class="mic-btn" id="micBtn" onclick="toggleMic()">
+                🎤 دەستپێکردن
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // گۆڕاوە سەرەکییەکان
+        let currentSurahNumber = 1;
+        let currentAyahs = [];
+        let currentIndex = 0;
+        let recognition;
+        let isListening = false;
+        
+        const apiUrl = "https://api.alquran.cloud/v1";
+        const ayahsContainer = document.getElementById('ayahs-container');
+        const loader = document.getElementById('loader');
+        const statusMsg = document.getElementById('statusMsg');
+        const micBtn = document.getElementById('micBtn');
+        const surahSelect = document.getElementById('surahSelect');
+
+        // ١. هێنانی لیستی سورەتەکان لە سەرەتاوە
+        async function fetchSurahList() {
+            try {
+                const response = await fetch(`${apiUrl}/surah`);
+                const data = await response.json();
+                
+                surahSelect.innerHTML = "";
+                data.data.forEach(surah => {
+                    const option = document.createElement('option');
+                    option.value = surah.number;
+                    option.text = `${surah.number}. ${surah.name}`;
+                    surahSelect.appendChild(option);
+                });
+                
+                // بارکردنی سورەتی الفاتحة وەک سەرەتا
+                loadSurahData(1);
+            } catch (error) {
+                alert("کێشە لە پەیوەندی ئینتەرنێت هەیە!");
+            }
+        }
+
+        // ٢. هێنانی دەقی سورەتەکە
+        async function loadSurahData(surahNumber) {
+            loader.style.display = "block";
+            ayahsContainer.innerHTML = "";
+            currentSurahNumber = parseInt(surahNumber);
+            currentIndex = 0;
+            surahSelect.value = surahNumber;
+
+            try {
+                // هێنانی ئایەتەکانی ئەو سورەتە
+                const response = await fetch(`${apiUrl}/surah/${surahNumber}`);
+                const data = await response.json();
+                currentAyahs = data.data.ayahs;
+
+                renderAyahs(currentAyahs, surahNumber);
+            } catch (error) {
+                statusMsg.innerText = "هەڵە لە بارکردنی سورەت!";
+            } finally {
+                loader.style.display = "none";
+            }
+        }
+
+        // ٣. پیشاندانی ئایەتەکان لەسەر شاشە
+        function renderAyahs(ayahs, surahNum) {
+            let htmlContent = "";
+            
+            // ئەگەر فاتیحە و تەوبە نەبوو، بەسمەلە زیاد بکە
+            if (surahNum != 1 && surahNum != 9) {
+                htmlContent += `<div class="basmala">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>`;
+            }
+
+            ayahs.forEach((ayah, index) => {
+                // لابردنی بەسمەلە لە ناو دەقی ئایەتی یەکەمی سورەتەکان (جگە لە فاتیحە)
+                let text = ayah.text;
+                if (surahNum != 1 && index === 0) {
+                    text = text.replace("بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ", "");
+                }
+
+                htmlContent += `<span id="ayah-${index}" class="ayah" onclick="setAyahManual(${index})">
+                    ${text} <span class="ayah-number">${ayah.numberInSurah}</span>
+                </span>`;
+            });
+
+            ayahsContainer.innerHTML = htmlContent;
+            highlightAyah(0);
+        }
+
+        // ٤. دیاریکردنی ئایەتی ئێستا بە ڕەنگ
+        function highlightAyah(index) {
+            document.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
+            const el = document.getElementById(`ayah-${index}`);
+            if (el) {
+                el.classList.add('active');
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function setAyahManual(index) {
+            currentIndex = index;
+            highlightAyah(index);
+        }
+
+        // ٥. گۆڕینی سورەت لە مینیۆوە
+        function changeSurah(val) {
+            loadSurahData(val);
+            if (isListening) restartRecognition();
+        }
+
+        // ٦. لۆجیکی زیرەکی دەستکرد بۆ ناسینەوە و بەراوردکردن
+        function normalizeText(text) {
+            return text
+                .replace(/([^\u0621-\u064A\u0660-\u0669 ])/g, '') // لابردنی حەرەکات
+                .replace(/(آ|إ|أ)/g, 'ا')
+                .replace(/(ة)/g, 'ه')
+                .replace(/(ى)/g, 'ي')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        function isMatch(spoken, original) {
+            const cleanSpoken = normalizeText(spoken);
+            const cleanOriginal = normalizeText(original);
+            
+            // ئەگەر نیوەی ئایەتەکە یان بەشێکی گرنگی تێدابوو
+            if (cleanSpoken.includes(cleanOriginal) || cleanOriginal.includes(cleanSpoken)) return true;
+            
+            // لۆجیکی سادەی ڕێژەیی (Simulated Similarity)
+            const commonWords = cleanSpoken.split(' ').filter(word => cleanOriginal.includes(word));
+            return commonWords.length >= 2 || (cleanOriginal.split(' ').length <= 3 && commonWords.length >= 1);
+        }
+
+        // ٧. ڕێکخستنی ناسینەوەی دەنگ (Speech Recognition)
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.lang = 'ar-SA';
+            recognition.continuous = true;
+            recognition.interimResults = true;
+
+            recognition.onstart = () => {
+                isListening = true;
+                micBtn.classList.add('listening');
+                micBtn.innerHTML = "⏹ وەستان";
+                statusMsg.innerText = "گوێ دەگرێت...";
+                statusMsg.style.color = "green";
+            };
+
+            recognition.onend = () => {
+                // ئەگەر خۆمان نەموەستاندبێت، با خۆی هەڵبکاتەوە (Continuous listening)
+                if (isListening) {
+                    recognition.start();
+                } else {
+                    micBtn.classList.remove('listening');
+                    micBtn.innerHTML = "🎤 دەستپێکردن";
+                    statusMsg.innerText = "وەستاوە";
+                    statusMsg.style.color = "#666";
+                }
+            };
+
+            recognition.onresult = (event) => {
+                let transcript = "";
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    transcript += event.results[i][0].transcript;
+                }
+
+                // پشکنین
+                const currentAyahText = currentAyahs[currentIndex].text;
+                
+                if (isMatch(transcript, currentAyahText)) {
+                    // ئەگەر هاوتا بوو
+                    currentIndex++;
+                    
+                    // ئایا سورەتەکە تەواو بوو؟
+                    if (currentIndex >= currentAyahs.length) {
+                        statusMsg.innerText = "سورەت تەواو بوو! دەچێتە سورەتی دواتر...";
+                        recognition.stop(); // بۆ ئەوەی buffer پاک بێتەوە
+                        setTimeout(() => {
+                            if (currentSurahNumber < 114) {
+                                loadSurahData(currentSurahNumber + 1);
+                                isListening = true; // دڵنیابوونەوە لە بەردەوامی
+                            } else {
+                                alert("پیرۆزە! قورئانت خەتم کرد.");
+                                isListening = false;
+                            }
+                        }, 2000);
+                    } else {
+                        // ئایەتی دواتر
+                        highlightAyah(currentIndex);
+                        
+                        // تەکنیکێک بۆ پاککردنەوەی مێشکی AIەکە (Reset Buffer)
+                        // زۆر گرنگە بۆ ئەوەی وشەی کۆن تێکەڵ بە نوێ نەبێت
+                        recognition.stop(); 
+                    }
+                }
+            };
+        } else {
+            alert("تکایە وێبگەڕی Google Chrome بەکاربهێنە");
+        }
+
+        function toggleMic() {
+            if (isListening) {
+                isListening = false;
+                recognition.stop();
+            } else {
+                recognition.start();
+            }
+        }
+
+        function restartRecognition() {
+            recognition.stop();
+            // Start will be triggered by onend if isListening is true, 
+            // but explicit restart is safer here.
+            setTimeout(() => { if(isListening) recognition.start(); }, 500);
+        }
+
+        // دەستپێکردن
+        fetchSurahList();
+
+    </script>
+</body>
+</html>
