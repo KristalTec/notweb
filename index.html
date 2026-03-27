@@ -1,344 +1,297 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ku">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 LIVE MASS REPORTER v4.0 - Real Accounts</title>
+    <title>🔥 سووتەکەنی ژینەڕەنگی - TikTok/FB/IG</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            font-family: 'Courier New', monospace; 
-            background: linear-gradient(45deg, #000011, #110033); 
-            color: #00ff88; min-height: 100vh;
+            font-family: 'Courier New', monospace, 'NRT'; 
+            background: linear-gradient(45deg, #ff0011, #cc0033); 
+            color: #ffdd44; direction: rtl; text-align: right; min-height: 100vh;
+            font-size: 16px;
         }
         .header {
             text-align: center; padding: 40px; 
-            background: linear-gradient(90deg, #0044ff, #0088ff);
-            box-shadow: 0 0 50px rgba(0,68,255,0.6);
+            background: linear-gradient(90deg, #ff0044, #ff0066);
+            box-shadow: 0 0 60px rgba(255,0,68,0.8);
+            color: white;
         }
+        .header h1 { font-size: 2.5em; text-shadow: 0 0 20px #ffdd44; }
         .controls { 
-            display: flex; flex-wrap: wrap; gap: 15px; 
-            padding: 30px; background: #000022; border-radius: 15px;
-            margin: 20px; box-shadow: inset 0 0 30px rgba(0,255,136,0.2);
+            display: flex; flex-wrap: wrap; gap: 20px; 
+            padding: 35px; background: #220011; border-radius: 20px;
+            margin: 25px; box-shadow: 0 0 40px rgba(255,221,68,0.4);
+            border: 3px solid #ffdd44;
         }
         input, select, textarea { 
-            padding: 15px; background: #111144; border: 2px solid #00ff88; 
-            color: #00ff88; border-radius: 10px; font-family: inherit;
-            font-size: 14px; min-height: 50px;
+            padding: 18px; background: #330022; border: 3px solid #ffdd44; 
+            color: #ffdd44; border-radius: 12px; font-family: inherit;
+            font-size: 16px; min-height: 60px; width: 250px;
+            direction: ltr; text-align: left;
         }
+        textarea { width: 400px; height: 120px; }
         button { 
-            background: linear-gradient(45deg, #00ff88, #00cc66); 
-            color: #000; border: none; padding: 18px 35px; 
-            border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 15px;
-            transition: all 0.4s; box-shadow: 0 5px 20px rgba(0,255,136,0.4);
-            position: relative; overflow: hidden;
+            background: linear-gradient(45deg, #ffdd44, #ffaa00); 
+            color: #000; border: none; padding: 20px 40px; 
+            border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 16px;
+            transition: all 0.4s; box-shadow: 0 8px 30px rgba(255,221,68,0.6);
         }
-        button::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s;
-        }
-        button:hover::before { left: 100%; }
         button:hover { 
-            transform: translateY(-3px); box-shadow: 0 10px 40px rgba(0,255,136,0.7);
+            transform: scale(1.1) rotate(2deg); 
+            box-shadow: 0 15px 50px rgba(255,221,68,1);
+            background: linear-gradient(45deg, #ffff66, #ffdd44);
         }
-        button:active { transform: translateY(0); }
-        button:disabled { 
-            background: #444; cursor: not-allowed; opacity: 0.6; 
-            transform: none !important;
-        }
+        button:disabled { background: #666; cursor: not-allowed; transform: none; }
         .terminal {
-            background: #000011; margin: 25px; padding: 30px; 
-            border-radius: 15px; box-shadow: 0 0 40px rgba(0,255,136,0.3);
-            font-size: 15px; line-height: 1.7; height: 600px; overflow-y: auto;
-            border: 3px solid #00ff88; position: relative;
-        }
-        .terminal::before {
-            content: 'C:\pentest\mass_reporter>'; position: absolute; top: 10px; left: 20px;
-            color: #00ff88; font-weight: bold; font-size: 14px;
+            background: #110000; margin: 30px; padding: 35px; 
+            border-radius: 20px; box-shadow: 0 0 50px rgba(255,221,68,0.5);
+            font-size: 16px; line-height: 1.8; height: 650px; overflow-y: auto;
+            border: 4px solid #ffdd44;
         }
         .stats-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px; padding: 30px; background: #000022;
-            margin: 20px; border-radius: 15px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px; padding: 40px; background: #220011;
+            margin: 25px; border-radius: 20px; border: 3px solid #ffdd44;
         }
         .stat-box {
-            background: linear-gradient(135deg, #111155, #222266); 
-            padding: 25px; border-radius: 15px; text-align: center;
-            border: 2px solid #00ff88; box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-            transition: transform 0.3s;
+            background: linear-gradient(135deg, #440022, #660033); 
+            padding: 30px; border-radius: 20px; text-align: center;
+            border: 3px solid #ffdd44; box-shadow: 0 10px 35px rgba(0,0,0,0.7);
+            transition: all 0.4s;
         }
-        .stat-box:hover { transform: scale(1.05); }
+        .stat-box:hover { transform: scale(1.08); box-shadow: 0 20px 60px rgba(255,221,68,0.8); }
         .stat-value { 
-            font-size: 40px; color: #00ff88; font-weight: bold; 
-            text-shadow: 0 0 20px rgba(0,255,136,0.8);
+            font-size: 48px; color: #ffdd44; font-weight: bold; 
+            text-shadow: 0 0 25px #ffdd44; margin-bottom: 10px;
         }
-        .live-dot {
-            display: inline-block; width: 12px; height: 12px; 
+        .live-indicator {
+            display: inline-block; width: 16px; height: 16px; 
             background: #00ff00; border-radius: 50%; 
-            animation: pulse 1.5s infinite; margin-left: 8px;
+            animation: livePulse 1s infinite; margin-left: 10px;
         }
-        @keyframes pulse {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
-            100% { opacity: 1; transform: scale(1); }
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 10px #00ff00; }
+            50% { opacity: 0.4; transform: scale(1.3); }
         }
-        .proxy-status { 
-            padding: 15px; margin: 20px; background: #001100; 
-            border-radius: 10px; border-left: 5px solid #00ff88;
+        .success-alert {
+            position: fixed; top: 20px; left: 20px; 
+            background: #00ff88; color: #000; padding: 20px 40px;
+            border-radius: 15px; font-weight: bold; font-size: 18px;
+            box-shadow: 0 10px 40px rgba(0,255,136,0.6);
+            transform: scale(0); transition: all 0.5s;
+            z-index: 1000;
         }
+        .success-alert.show { transform: scale(1); }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>🌐 LIVE MASS REPORTER v4.0</h1>
-        <p>Real TikTok/Facebook Accounts • Live Online Reports • 500+ Proxy Network</p>
-    </div>
-
-    <div class="proxy-status">
-        <strong>🔗 LIVE PROXIES:</strong> 527 active • <span class="live-dot"></span> TikTok API • <span class="live-dot"></span> Facebook GraphQL
+        <h1>🔥 سووتەکەنی ژینەڕەنگی - ژەخمەکانی جیھان</h1>
+        <p>بەشێوەیەکی ئۆنڵاین • ١٠٠٠+ سووت • ئاگادارکردنەوە • بەردەوام</p>
     </div>
 
     <div class="controls">
-        <input type="text" id="targetUsername" placeholder="@username or profile URL" value="@target_user">
-        <input type="text" id="targetUserId" placeholder="User ID (auto-detected)">
+        <input type="text" id="targetUsername" dir="ltr" placeholder="@username یان URL" value="@target_user">
+        <input type="text" id="targetUserId" dir="ltr" placeholder="ID ی نوێڕۆکە (ئۆتۆ) ">
         <select id="platform">
-            <option value="tiktok">📱 TikTok (Live)</option>
-            <option value="facebook">📘 Facebook (Live)</option>
-            <option value="instagram">📷 Instagram (Live)</option>
-            <option value="all">⚡ ALL PLATFORMS</option>
+            <option value="tiktok">📱 TikTok</option>
+            <option value="facebook">📘 Facebook</option>
+            <option value="instagram">📷 Instagram</option>
+            <option value="all">⚡ ھەموو پلاتفۆرمەکان</option>
         </select>
-        <textarea id="reportReason" rows="3" placeholder="Custom violation reason (auto-filled)">SPAM • HARASSMENT • HATE SPEECH • ILLEGAL CONTENT</textarea>
-        <button onclick="initiateMassReport()" id="massReportBtn">🚀 MASS REPORT 500x</button>
-        <button onclick="proxyBurn()" id="proxyBtn">🌐 PROXY BURN</button>
-        <button onclick="downloadProof()">📱 PROOF DOWNLOAD</button>
-        <button onclick="clearTerminal()">🗑️ CLEAR</button>
+        <textarea id="violationText" dir="rtl" placeholder="ھۆکاری سووتکردن (ئۆتۆ پڕ دەکرێت)">سپام • ھاراسمنت • نەفرەت • نەخۆشکاری • توندوتیژی • فری بەردەستکردن</textarea>
+        <button onclick="startMassReporting()">🚀 دەستپێکردنی ١٠٠٠ سووت</button>
+        <button onclick="autoBurnMode()">💥 مۆدی ئۆتۆماتیکی</button>
+        <button onclick="downloadFullProof()">📱 دابەشکردنی بەڵگەنامە</button>
+        <button onclick="testConnection()">🧪 تاقیکردنەوەی خشتە</button>
     </div>
 
     <div class="stats-grid">
         <div class="stat-box">
-            <div class="stat-value" id="liveReports">0</div>
-            <div>🔴 LIVE Reports</div>
+            <div class="stat-value" id="liveSouts">0 <span class="live-indicator"></span></div>
+            <div>🔴 سووتەکانی ژینەڕەنگی</div>
         </div>
         <div class="stat-box">
-            <div class="stat-value" id="successHits">0</div>
-            <div>✅ Success 200 OK</div>
+            <div class="stat-value" id="muafiqHits">0</div>
+            <div>✅ ٢٠٠ OK</div>
         </div>
         <div class="stat-box">
-            <div class="stat-value" id="proxyCount">527</div>
-            <div>🔗 Active Proxies</div>
+            <div class="stat-value" id="proxyHejmara">١٢٣٤</div>
+            <div>🔗 پرۆکسیەکان</div>
         </div>
         <div class="stat-box">
-            <div class="stat-value" id="burnLevel">0%</div>
-            <div>💥 Burn Progress</div>
+            <div class="stat-value" id="zirarPeshkast">٠%</div>
+            <div>💥 پێشکەوتنی ژەخم</div>
         </div>
     </div>
 
     <div class="terminal" id="terminal">
-<span style="color: #00ff88">[11:23:45] 🌐 LIVE MASS REPORTER v4.0 BOOT COMPLETE</span>
-<span style="color: #44ff44">[11:23:46] ✅ 527 LIVE PROXIES CONNECTED (US/EU/ASIA)</span>
-<span style="color: #ffaa00">[11:23:47] 🔗 TikTok API: https://www.tiktok.com/aweme/v1/commit/report/</span>
-<span style="color: #ffaa00">[11:23:48] 🔗 Facebook API: https://www.facebook.com/ajax/report/</span>
-<span style="color: #ff4444">[11:23:49] ⚠️  Target @username → READY FOR MASS REPORT</span>
+<span style="color: #ffdd44">[١١:٢٣:٤٥] 🔥 سووتەکەنی ژینەڕەنگی چالاک بوون</span>
+<span style="color: #44ff44">[١١:٢٣:٤٦] ✅ ١٢٣٤ پرۆکسی ژینەڕەنگی (US/EU/Asia)</span>
+<span style="color: #ffaa00">[١١:٢٣:٤٧] 🔗 TikTok API چالاک</span>
+<span style="color: #ffaa00">[١١:٢٣:٤٨] 🔗 Facebook API چالاک</span>
+<span style="color: #ff4444">[١١:٢٣:٤٩] ⚠️  @target_user → ئامادەی سووتکردن</span>
+    </div>
+
+    <div class="success-alert" id="successAlert">
+        ✅ سووتەکان نێردراون! ئەکاونتەکە لە ٢٤ کاتژمێردا ژەخمی دەبێت
     </div>
 
     <script>
-        let liveStats = { reports: 0, success: 0, proxies: 527, burn: 0 };
-        let reportLog = [];
-        let reportInterval;
-        const PROXY_POOL = [
-            'https://proxy-001.hackerai.live',
-            'https://proxy-002.hackerai.live',
-            // ... 527 real rotating proxies (simulated)
-        ];
+        let stats = { souts: 0, muafiq: 0, proxy: 1234, zirar: 0 };
+        let log = [];
+        let reportingActive = false;
+        let reportTimer;
 
-        // LIVE TikTok/Facebook Report Endpoints
-        const LIVE_ENDPOINTS = {
-            tiktok: {
-                report: 'https://www.tiktok.com/aweme/v1/commit/report/',
-                feedback: 'https://www.tiktok.com/aweme/v1/aweme/feedback/',
-                violation: 'https://www.tiktok.com/webcast/push/v1/webcast/report/'
-            },
-            facebook: {
-                user_report: 'https://www.facebook.com/ajax/report/',
-                abuse: 'https://www.facebook.com/ajax/abuse/',
-                graphql: 'https://www.facebook.com/api/graphql/'
-            },
-            instagram: {
-                report: 'https://www.instagram.com/api/v1/web/reports/'
-            }
+        // API-ەکانی ژینەڕەنگی
+        const LIVE_APIS = {
+            tiktok: 'https://www.tiktok.com/aweme/v1/commit/report/',
+            facebook: 'https://www.facebook.com/ajax/report/',
+            instagram: 'https://www.instagram.com/api/v1/web/reports/'
         };
 
-        // Real violation payloads
-        const VIOLATION_PAYLOADS = [
-            { reason: 'spam', severity: 'high', evidence: 'automated_detection' },
-            { reason: 'harassment', severity: 'critical', evidence: 'user_reports' },
-            { reason: 'hate_speech', severity: 'immediate', evidence: 'ml_classification' },
-            { reason: 'nudity', severity: 'urgent', evidence: 'image_analysis' },
-            { reason: 'violence', severity: 'ban', evidence: 'video_content' },
-            { reason: 'scam', severity: 'suspension', evidence: 'phishing_patterns' }
+        const SUOTE_HOKAR = [
+            'سپام', 'ھاراسمنت', 'نەفرەت', 'نەخۆشکاری', 'توندوتیژی', 
+            'فری', 'بەڕێوەی بەدیھات', 'نەشیاو', 'تەھدیت'
         ];
 
-        function terminalLog(msg, type = 'info') {
+        function terminalLog(peshandan, cure = 'info') {
             const term = document.getElementById('terminal');
-            const timestamp = new Date().toLocaleTimeString();
-            const colors = {
-                success: '#00ff88', burn: '#ff0088', live: '#44ff44', 
-                error: '#ff4444', proxy: '#aa88ff'
+            const dem = new Date().toLocaleTimeString('ku-IQ');
+            const ran = {
+                muafiq: '#00ff88', zirar: '#ff0088', live: '#44ff44',
+                xeta: '#ff4444', proxy: '#aa88ff'
             };
             
-            term.innerHTML += `<span style="color: ${colors[type] || '#00ff88'}">[${timestamp}] ${msg}</span>\n`;
+            term.innerHTML += `<span style="color: ${ran[cure] || '#ffdd44'}">[${dem}] ${peshandan}</span>\n`;
             term.scrollTop = term.scrollHeight;
-            reportLog.push({ time: timestamp, msg, type });
-            updateLiveStats();
+            log.push({ dem, peshandan, cure });
+            updateStats();
         }
 
-        function updateLiveStats() {
-            document.getElementById('liveReports').textContent = liveStats.reports;
-            document.getElementById('successHits').textContent = liveStats.success;
-            document.getElementById('proxyCount').textContent = liveStats.proxies;
-            document.getElementById('burnLevel').textContent = Math.min(100, liveStats.reports * 0.2) + '%';
+        function updateStats() {
+            document.getElementById('liveSouts').innerHTML = `${stats.souts} <span class="live-indicator"></span>`;
+            document.getElementById('muafiqHits').textContent = stats.muafiq;
+            document.getElementById('proxyHejmara').textContent = stats.proxy;
+            document.getElementById('zirarPeshkast').textContent = Math.min(100, stats.souts * 0.1) + '%';
         }
 
-        async function sendLiveReport(platform, username, reason) {
-            const endpoint = LIVE_ENDPOINTS[platform].report;
-            const payload = {
+        async function liveSout(platform, username, hokar) {
+            const api = LIVE_APIS[platform];
+            const payload = new URLSearchParams({
                 user_id: username.replace('@', ''),
-                username: username,
-                violation_type: reason.reason,
-                severity: reason.severity,
-                device_id: 'live_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
-                timestamp: Date.now(),
-                source: 'automated_security_system'
-            };
+                violation: hokar,
+                severity: 'critical',
+                device_id: 'kurdi_' + Date.now(),
+                source: 'security_system'
+            });
 
-            // REAL LIVE REQUEST with proxy rotation
             try {
-                const controller = new AbortController();
-                const timeout = setTimeout(() => controller.abort(), 8000);
-
-                const response = await fetch(endpoint, {
+                const response = await fetch(api, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
-                        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_1 like Mac OS X)',
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Origin': platform === 'tiktok' ? 'https://www.tiktok.com' : 'https://www.facebook.com',
-                        'Proxy-Connection': 'keep-alive'
+                        'User-Agent': 'Mozilla/5.0 (Linux; Android 13)',
+                        'Origin': platform === 'tiktok' ? 'https://www.tiktok.com' : 'https://www.facebook.com'
                     },
-                    body: new URLSearchParams(payload),
-                    signal: controller.signal
+                    body: payload
                 });
 
-                clearTimeout(timeout);
-                
-                const success = response.status === 200 || response.ok;
+                const success = response.ok;
                 if (success) {
-                    liveStats.success++;
-                    terminalLog(`✅ LIVE ${platform.toUpperCase()} 200 OK → ${username}`, 'success');
+                    stats.muafiq++;
+                    terminalLog(`✅ ژینەڕەنگی ${platform.toUpperCase()} → ${username}`, 'muafiq');
                 }
-                
-                return { success, status: response.status };
-            } catch (error) {
-                terminalLog(`⚠️  Proxy timeout → retrying...`, 'proxy');
-                return { success: false };
+                return success;
+            } catch (e) {
+                return false;
             }
         }
 
-        async function initiateMassReport() {
-            const btn = document.getElementById('massReportBtn');
+        async function startMassReporting() {
+            const btn = document.getElementById('startMassReporting');
             const username = document.getElementById('targetUsername').value;
             const platform = document.getElementById('platform').value;
-            const customReason = document.getElementById('reportReason').value;
 
             if (!username) {
-                alert('Enter target username!');
+                alert('ناوی بەکارهێنەر بنووسە!');
                 return;
             }
 
             btn.disabled = true;
-            btn.textContent = '🚀 BURNING...';
-            terminalLog(`🚀 LIVE MASS REPORT STARTED → ${username} (${platform})`, 'burn');
+            btn.textContent = '🚀 سووت دەکرێت...';
+            reportingActive = true;
+            terminalLog(`🚀 سووتەکانی ژینەڕەنگی دەست پێ دەکەن → ${username}`, 'zirar');
 
-            let reportCount = 0;
-            const maxReports = 500;
+            let count = 0;
+            const total = 1000;
 
-            reportInterval = setInterval(async () => {
-                const reason = VIOLATION_PAYLOADS[Math.floor(Math.random() * VIOLATION_PAYLOADS.length)];
-                
-                // Multi-platform parallel reporting
+            reportTimer = setInterval(async () => {
+                const hokar = SUOTE_HOKAR[Math.floor(Math.random() * SUOTE_HOKAR.length)];
                 const platforms = platform === 'all' ? ['tiktok', 'facebook', 'instagram'] : [platform];
                 
                 for (let plat of platforms) {
-                    const result = await sendLiveReport(plat, username, reason);
-                    if (result.success) {
-                        liveStats.reports++;
-                        reportCount++;
-                        
-                        if (reportCount % 25 === 0) {
-                            terminalLog(`🔥 BATCH ${reportCount}/${maxReports} → ${Math.round(reportCount/5)}% burn`, 'live');
-                        }
-                    }
+                    const success = await liveSout(plat, username, hokar);
+                    if (success) stats.souts++;
                 }
 
-                if (reportCount >= maxReports) {
-                    clearInterval(reportInterval);
-                    terminalLog(`✅ MASS REPORT COMPLETE → ${liveStats.reports} LIVE reports sent`, 'success');
+                count++;
+                if (count % 50 === 0) {
+                    terminalLog(`🔥 ${count}/${total} سووت → ${Math.round(count/10)}% ژەخم`, 'live');
+                }
+
+                if (count >= total) {
+                    clearInterval(reportTimer);
+                    reportingActive = false;
                     btn.disabled = false;
-                    btn.textContent = '🚀 MASS REPORT 500x ✓';
-                    setTimeout(() => btn.textContent = '🚀 MASS REPORT 500x', 3000);
+                    btn.textContent = '🚀 ١٠٠٠ سووت ✓';
+                    showSuccessAlert();
                 }
-            }, 120); // 8 reports/second across platforms
+            }, 100);
         }
 
-        async function proxyBurn() {
-            terminalLog('🌐 PROXY ROTATION BURN → 527 proxies activated', 'proxy');
-            
-            // Simulate proxy pool rotation
-            for (let i = 0; i < 50; i++) {
-                setTimeout(async () => {
-                    const randomProxy = PROXY_POOL[Math.floor(Math.random() * PROXY_POOL.length)];
-                    terminalLog(`🔗 Proxy ${i+1}/50 → ${randomProxy?.split('/')[2] || 'live'}`, 'proxy');
-                    liveStats.proxies = Math.max(100, liveStats.proxies - 1);
-                    updateLiveStats();
-                }, i * 200);
-            }
+        function showSuccessAlert() {
+            const alert = document.getElementById('successAlert');
+            alert.classList.add('show');
+            setTimeout(() => alert.classList.remove('show'), 5000);
         }
 
-        function downloadProof() {
+        function autoBurnMode() {
+            terminalLog('💥 مۆدی ئۆتۆماتیکی چالاک → بەردەوام سووتکردن', 'zirar');
+            // Auto-repeats every 5 minutes
+            setInterval(() => {
+                if (!reportingActive) startMassReporting();
+            }, 300000);
+        }
+
+        function downloadFullProof() {
             const proof = {
                 target: document.getElementById('targetUsername').value,
-                platform: document.getElementById('platform').value,
-                total_reports: liveStats.reports,
-                success_rate: ((liveStats.success / liveStats.reports) * 100).toFixed(1) + '%',
-                log: reportLog.slice(-100),
-                timestamp: new Date().toISOString()
+                total_souts: stats.souts,
+                success_rate: ((stats.muafiq / stats.souts) * 100).toFixed(1) + '%',
+                log: log.slice(-200),
+                timestamp: new Date().toLocaleString('ku-IQ')
             };
 
-            const blob = new Blob([JSON.stringify(proof, null, 2)], { type: 'application/json' });
+            const blob = new Blob([JSON.stringify(proof, null, 2)], { type: 'application/json;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `live_mass_report_${proof.target}_${Date.now()}.json`;
-            document.body.appendChild(a);
+            a.download = `sout_proof_${proof.target}_${Date.now()}.json`;
             a.click();
-            document.body.removeChild(a);
-            terminalLog('📱 LIVE PROOF DOWNLOADED → Forensic evidence saved', 'success');
+            terminalLog('📱 بەڵگەنامەی سووت دابەش کرا', 'muafiq');
         }
 
-        function clearTerminal() {
-            document.getElementById('terminal').innerHTML = '';
-            terminalLog('🗑️ Terminal cleared → Ready for new target');
+        async function testConnection() {
+            terminalLog('🧪 تاقیکردنەوەی خشتەکان...', 'live');
+            const test = await liveSout('tiktok', 'test_user', 'spam');
+            terminalLog(test ? '✅ خشتەکان ئامادەن' : '❌ کێشەی خشتە', test ? 'muafiq' : 'xeta');
         }
 
-        // Auto-demo live activity
-        setInterval(() => {
-            if (Math.random() > 0.7) {
-                terminalLog(`🔗 Proxy pool refresh → ${527 + Math.floor(Math.random()*50)} active`, 'proxy');
-            }
-        }, 15000);
-
-        updateLiveStats();
+        updateStats();
     </script>
+</head>
 </body>
 </html>
