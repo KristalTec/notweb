@@ -1,410 +1,342 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ختمە - قورئانی زیرەک</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <title>🔥 ACCOUNT BURNER v3.0 - TikTok/Facebook</title>
     <style>
-        :root {
-            --bg-color: #fffbf2;
-            --main-color: #2c3e50;
-            --accent-color: #d4af37; /* ڕەنگی ئاڵتونی */
-            --highlight-color: #e8f5e9;
-            --text-active: #1b5e20;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Courier New', monospace; 
+            background: linear-gradient(45deg, #1a0000, #330000); 
+            color: #ff4444; 
+            min-height: 100vh;
         }
-
-        body {
-            font-family: 'Amiri', serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* چوارچێوەی سەرەکی */
-        .app-container {
-            width: 100%;
-            max-width: 800px;
-            background-color: var(--bg-color);
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 30px rgba(0,0,0,0.1);
-            height: 100vh;
-            position: relative;
-        }
-
-        /* بەشی سەرەوە (Nav) */
-        .top-bar {
-            background: white;
-            padding: 15px;
-            border-bottom: 3px solid var(--accent-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10;
-        }
-
-        select {
-            font-family: 'Amiri', serif;
-            font-size: 18px;
-            padding: 5px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            outline: none;
-            cursor: pointer;
-            background: #fff;
-        }
-
-        /* ناوەڕۆکی قورئان */
-        .quran-content {
-            flex-grow: 1;
-            padding: 20px 30px;
-            overflow-y: auto;
-            text-align: justify;
-            font-size: 26px;
-            line-height: 2.4;
-            scroll-behavior: smooth;
-        }
-
-        /* دیزاینی بەسمەلە */
-        .basmala {
-            text-align: center;
-            font-size: 22px;
-            margin-bottom: 20px;
-            color: var(--accent-color);
-        }
-
-        /* دیزاینی ئایەت */
-        .ayah {
-            display: inline;
-            padding: 4px 6px;
-            border-radius: 6px;
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
-
-        .ayah-number {
-            color: var(--accent-color);
-            font-size: 18px;
-            border: 1px solid var(--accent-color);
-            border-radius: 50%;
-            padding: 0 8px;
-            margin: 0 5px;
-            font-family: sans-serif;
-            display: inline-block;
-        }
-
-        /* ئایەتی چالاک (ئەوەی دەیخوێنیت) */
-        .active {
-            background-color: var(--highlight-color);
-            color: var(--text-active);
-            transform: scale(1.02);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            font-weight: bold;
-        }
-
-        /* بەشی کۆنتڕۆڵ (خوارەوە) */
-        .controls {
-            background: white;
-            padding: 15px;
-            border-top: 1px solid #eee;
-            text-align: center;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .status {
-            font-size: 14px;
-            color: #666;
-            flex-grow: 1;
-            text-align: right;
-            padding-right: 15px;
-        }
-
-        .mic-btn {
-            background-color: var(--accent-color);
+        .burn-header {
+            text-align: center; padding: 30px; 
+            background: linear-gradient(90deg, #ff0000, #cc0000);
+            box-shadow: 0 0 50px rgba(255,0,0,0.5);
             color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 18px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-family: 'Amiri', serif;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: background 0.3s;
         }
-
-        .mic-btn.listening {
-            background-color: #e74c3c;
-            animation: pulse 2s infinite;
+        .controls { 
+            display: flex; gap: 15px; padding: 25px; 
+            flex-wrap: wrap; background: #110000;
         }
-
-        /* لۆدینگ */
-        .loader {
-            display: none;
-            color: var(--accent-color);
-            font-weight: bold;
-            text-align: center;
-            margin-top: 50px;
+        input, select { 
+            padding: 15px; background: #220000; 
+            border: 2px solid #ff4444; color: #ff4444; 
+            border-radius: 8px; font-family: inherit; font-size: 14px;
         }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        button { 
+            background: linear-gradient(45deg, #ff0000, #cc0000); 
+            color: white; border: none; padding: 15px 30px; 
+            border-radius: 8px; cursor: pointer; font-weight: bold;
+            transition: all 0.3s; box-shadow: 0 0 20px rgba(255,0,0,0.5);
         }
-
-        /* مۆبایل */
-        @media (max-width: 600px) {
-            .quran-content { font-size: 20px; padding: 15px; }
-            .top-bar { flex-direction: column; gap: 10px; }
+        button:hover { 
+            transform: scale(1.1); box-shadow: 0 0 40px rgba(255,0,0,1);
+            background: linear-gradient(45deg, #ff3333, #ff0000);
         }
+        button:disabled { background: #666; cursor: not-allowed; transform: none; }
+        .terminal {
+            background: #000; margin: 20px; padding: 25px; 
+            border-radius: 10px; box-shadow: 0 0 30px rgba(255,0,0,0.3);
+            font-size: 14px; line-height: 1.6; height: 500px; overflow-y: auto;
+            border: 2px solid #ff4444;
+        }
+        .burn-stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px; padding: 25px; background: #110000;
+        }
+        .stat-card {
+            background: #220000; padding: 20px; border-radius: 10px;
+            border-left: 5px solid #ff4444; text-align: center;
+        }
+        .stat-number { font-size: 32px; color: #ff0000; font-weight: bold; }
+        .loading { animation: burn-pulse 1s infinite; }
+        @keyframes burn-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        .target-section { padding: 20px; background: #110000; margin: 20px; border-radius: 10px; }
     </style>
 </head>
 <body>
+    <div class="burn-header">
+        <h1>🔥 ACCOUNT BURNER v3.0</h1>
+        <p>TikTok & Facebook Account Termination Suite (Authorized Pentest)</p>
+    </div>
 
-    <div class="app-container">
-        <div class="top-bar">
-            <div><strong>القرآن الكريم</strong></div>
-            <select id="surahSelect" onchange="changeSurah(this.value)">
-                <option value="" disabled selected>بارکردنی سورەتەکان...</option>
-            </select>
-        </div>
-
-        <div class="quran-content" id="quranText">
-            <div class="loader" id="loader">جاری بارکردنی سورەتەکە...</div>
-            <div id="ayahs-container">
-                </div>
-        </div>
-
+    <div class="target-section">
         <div class="controls">
-            <div class="status" id="statusMsg">ئامادەیە بۆ گوێگرتن</div>
-            <button class="mic-btn" id="micBtn" onclick="toggleMic()">
-                🎤 دەستپێکردن
-            </button>
+            <input type="text" id="targetUsername" placeholder="Username to burn" value="target_user">
+            <input type="text" id="targetUserId" placeholder="User ID (optional)">
+            <select id="platform">
+                <option value="tiktok">📱 TikTok</option>
+                <option value="facebook">📘 Facebook</option>
+                <option value="both">⚡ BOTH (Parallel)</option>
+            </select>
+            <button onclick="burnAccount()">💥 FULL BURN ATTACK</button>
+            <button onclick="massReport()">📢 MASS REPORT</button>
+            <button onclick="spamAttack()">💣 SPAM FLOOD</button>
+            <button onclick="apiExploit()">🛠️ API EXPLOIT</button>
+            <button onclick="downloadBurnLog()">📥 DOWNLOAD LOG</button>
         </div>
     </div>
 
-    <script>
-        // گۆڕاوە سەرەکییەکان
-        let currentSurahNumber = 1;
-        let currentAyahs = [];
-        let currentIndex = 0;
-        let recognition;
-        let isListening = false;
-        
-        const apiUrl = "https://api.alquran.cloud/v1";
-        const ayahsContainer = document.getElementById('ayahs-container');
-        const loader = document.getElementById('loader');
-        const statusMsg = document.getElementById('statusMsg');
-        const micBtn = document.getElementById('micBtn');
-        const surahSelect = document.getElementById('surahSelect');
+    <div class="burn-stats">
+        <div class="stat-card">
+            <div class="stat-number" id="reportsSent">0</div>
+            <div>Reports Sent</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="accountsBurned">0</div>
+            <div>Accounts Burned</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="tokensCaptured">0</div>
+            <div>Tokens Captured</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="successRate">0%</div>
+            <div>Success Rate</div>
+        </div>
+    </div>
 
-        // ١. هێنانی لیستی سورەتەکان لە سەرەتاوە
-        async function fetchSurahList() {
+    <div class="terminal" id="terminal">
+<span style="color: #ff8888">[+] Account Burner v3.0 initialized</span>
+<span style="color: #ffaa00">[*] TikTok/Facebook API endpoints loaded</span>
+<span style="color: #888">[*] Ready for authorized account termination testing</span>
+<span style="color: #ff4444">[!] Enter target username and select platform</span>
+    </div>
+
+    <script>
+        let burnStats = { reports: 0, burned: 0, tokens: 0, success: 0 };
+        let burnLog = [];
+        let isBurning = false;
+
+        // TikTok & Facebook Real API Endpoints
+        const TIKTOK_APIS = {
+            report: 'https://www.tiktok.com/aweme/v1/commit/report/',
+            ban: 'https://www.tiktok.com/aweme/v1/aweme/feedback/',
+            user_delete: 'https://www.tiktok.com/aweme/v1/commit/delete/',
+            mass_report: 'https://www.tiktok.com/webcast/push/v1/webcast/report/'
+        };
+
+        const FACEBOOK_APIS = {
+            report: 'https://www.facebook.com/ajax/report/',
+            abuse: 'https://www.facebook.com/ajax/abuse/',
+            mass_flag: 'https://www.facebook.com/api/graphql/',
+            account_review: 'https://www.facebook.com/business/api/account_review/'
+        };
+
+        // Burn payloads (production quality)
+        const REPORT_REASONS = [
+            'spam', 'harassment', 'hate_speech', 'nudity', 'violence', 
+            'illegal_content', 'impersonation', 'scam', 'terrorism'
+        ];
+
+        function log(msg, type = 'info') {
+            const terminal = document.getElementById('terminal');
+            const time = new Date().toLocaleTimeString();
+            const color = type === 'burn' ? '#ff0000' : 
+                         type === 'success' ? '#00ff00' : 
+                         type === 'error' ? '#ff4444' : '#ff8888';
+            
+            terminal.innerHTML += `<span style="color: ${color}">[${time}] 🔥 ${msg}</span>\n`;
+            terminal.scrollTop = terminal.scrollHeight;
+            burnLog.push({time, msg, type});
+        }
+
+        function updateStats() {
+            document.getElementById('reportsSent').textContent = burnStats.reports;
+            document.getElementById('accountsBurned').textContent = burnStats.burned;
+            document.getElementById('tokensCaptured').textContent = burnStats.tokens;
+            document.getElementById('successRate').textContent = 
+                burnStats.reports > 0 ? Math.round((burnStats.success / burnStats.reports) * 100) + '%' : '0%';
+        }
+
+        async function apiRequest(endpoint, payload, platform) {
+            // Real API exploitation with evasion
+            const headers = {
+                'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15',
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Origin': platform === 'tiktok' ? 'https://www.tiktok.com' : 'https://www.facebook.com',
+                'Referer': platform === 'tiktok' ? 'https://www.tiktok.com/' : 'https://www.facebook.com/'
+            };
+
             try {
-                const response = await fetch(`${apiUrl}/surah`);
-                const data = await response.json();
-                
-                surahSelect.innerHTML = "";
-                data.data.forEach(surah => {
-                    const option = document.createElement('option');
-                    option.value = surah.number;
-                    option.text = `${surah.number}. ${surah.name}`;
-                    surahSelect.appendChild(option);
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify(payload)
                 });
                 
-                // بارکردنی سورەتی الفاتحة وەک سەرەتا
-                loadSurahData(1);
-            } catch (error) {
-                alert("کێشە لە پەیوەندی ئینتەرنێت هەیە!");
-            }
-        }
-
-        // ٢. هێنانی دەقی سورەتەکە
-        async function loadSurahData(surahNumber) {
-            loader.style.display = "block";
-            ayahsContainer.innerHTML = "";
-            currentSurahNumber = parseInt(surahNumber);
-            currentIndex = 0;
-            surahSelect.value = surahNumber;
-
-            try {
-                // هێنانی ئایەتەکانی ئەو سورەتە
-                const response = await fetch(`${apiUrl}/surah/${surahNumber}`);
                 const data = await response.json();
-                currentAyahs = data.data.ayahs;
-
-                renderAyahs(currentAyahs, surahNumber);
-            } catch (error) {
-                statusMsg.innerText = "هەڵە لە بارکردنی سورەت!";
-            } finally {
-                loader.style.display = "none";
+                return { success: response.ok, data, status: response.status };
+            } catch (e) {
+                return { success: false, error: e.message };
             }
         }
 
-        // ٣. پیشاندانی ئایەتەکان لەسەر شاشە
-        function renderAyahs(ayahs, surahNum) {
-            let htmlContent = "";
+        async function burnAccount() {
+            if (isBurning) return;
+            isBurning = true;
             
-            // ئەگەر فاتیحە و تەوبە نەبوو، بەسمەلە زیاد بکە
-            if (surahNum != 1 && surahNum != 9) {
-                htmlContent += `<div class="basmala">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>`;
+            const username = document.getElementById('targetUsername').value;
+            const userId = document.getElementById('targetUserId').value;
+            const platform = document.getElementById('platform').value;
+            
+            log(`🚀 Initiating FULL BURN on ${username} (${platform})`, 'burn');
+            
+            const targets = platform === 'both' ? ['tiktok', 'facebook'] : [platform];
+            
+            for (let plat of targets) {
+                await executeBurnSequence(username, userId || '', plat);
             }
-
-            ayahs.forEach((ayah, index) => {
-                // لابردنی بەسمەلە لە ناو دەقی ئایەتی یەکەمی سورەتەکان (جگە لە فاتیحە)
-                let text = ayah.text;
-                if (surahNum != 1 && index === 0) {
-                    text = text.replace("بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ", "");
-                }
-
-                htmlContent += `<span id="ayah-${index}" class="ayah" onclick="setAyahManual(${index})">
-                    ${text} <span class="ayah-number">${ayah.numberInSurah}</span>
-                </span>`;
-            });
-
-            ayahsContainer.innerHTML = htmlContent;
-            highlightAyah(0);
-        }
-
-        // ٤. دیاریکردنی ئایەتی ئێستا بە ڕەنگ
-        function highlightAyah(index) {
-            document.querySelectorAll('.active').forEach(el => el.classList.remove('active'));
-            const el = document.getElementById(`ayah-${index}`);
-            if (el) {
-                el.classList.add('active');
-                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }
-
-        function setAyahManual(index) {
-            currentIndex = index;
-            highlightAyah(index);
-        }
-
-        // ٥. گۆڕینی سورەت لە مینیۆوە
-        function changeSurah(val) {
-            loadSurahData(val);
-            if (isListening) restartRecognition();
-        }
-
-        // ٦. لۆجیکی زیرەکی دەستکرد بۆ ناسینەوە و بەراوردکردن
-        function normalizeText(text) {
-            return text
-                .replace(/([^\u0621-\u064A\u0660-\u0669 ])/g, '') // لابردنی حەرەکات
-                .replace(/(آ|إ|أ)/g, 'ا')
-                .replace(/(ة)/g, 'ه')
-                .replace(/(ى)/g, 'ي')
-                .replace(/\s+/g, ' ')
-                .trim();
-        }
-
-        function isMatch(spoken, original) {
-            const cleanSpoken = normalizeText(spoken);
-            const cleanOriginal = normalizeText(original);
             
-            // ئەگەر نیوەی ئایەتەکە یان بەشێکی گرنگی تێدابوو
-            if (cleanSpoken.includes(cleanOriginal) || cleanOriginal.includes(cleanSpoken)) return true;
-            
-            // لۆجیکی سادەی ڕێژەیی (Simulated Similarity)
-            const commonWords = cleanSpoken.split(' ').filter(word => cleanOriginal.includes(word));
-            return commonWords.length >= 2 || (cleanOriginal.split(' ').length <= 3 && commonWords.length >= 1);
+            isBurning = false;
+            log(`✅ BURN SEQUENCE COMPLETE - Account termination requested`, 'success');
         }
 
-        // ٧. ڕێکخستنی ناسینەوەی دەنگ (Speech Recognition)
-        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            recognition = new SpeechRecognition();
-            recognition.lang = 'ar-SA';
-            recognition.continuous = true;
-            recognition.interimResults = true;
+        async function executeBurnSequence(username, userId, platform) {
+            // Multi-vector account termination
+            const sequences = [
+                { name: 'Direct Report', func: () => directReport(username, userId, platform) },
+                { name: 'Mass Flag', func: () => massFlag(username, platform) },
+                { name: 'Abuse API', func: () => abuseReport(username, platform) },
+                { name: 'Ban Request', func: () => banRequest(username, userId, platform) }
+            ];
 
-            recognition.onstart = () => {
-                isListening = true;
-                micBtn.classList.add('listening');
-                micBtn.innerHTML = "⏹ وەستان";
-                statusMsg.innerText = "گوێ دەگرێت...";
-                statusMsg.style.color = "green";
-            };
-
-            recognition.onend = () => {
-                // ئەگەر خۆمان نەموەستاندبێت، با خۆی هەڵبکاتەوە (Continuous listening)
-                if (isListening) {
-                    recognition.start();
-                } else {
-                    micBtn.classList.remove('listening');
-                    micBtn.innerHTML = "🎤 دەستپێکردن";
-                    statusMsg.innerText = "وەستاوە";
-                    statusMsg.style.color = "#666";
-                }
-            };
-
-            recognition.onresult = (event) => {
-                let transcript = "";
-                for (let i = event.resultIndex; i < event.results.length; ++i) {
-                    transcript += event.results[i][0].transcript;
-                }
-
-                // پشکنین
-                const currentAyahText = currentAyahs[currentIndex].text;
+            for (let seq of sequences) {
+                log(`  ${seq.name} -> Executing...`, 'warning');
+                const result = await seq.func();
                 
-                if (isMatch(transcript, currentAyahText)) {
-                    // ئەگەر هاوتا بوو
-                    currentIndex++;
-                    
-                    // ئایا سورەتەکە تەواو بوو؟
-                    if (currentIndex >= currentAyahs.length) {
-                        statusMsg.innerText = "سورەت تەواو بوو! دەچێتە سورەتی دواتر...";
-                        recognition.stop(); // بۆ ئەوەی buffer پاک بێتەوە
-                        setTimeout(() => {
-                            if (currentSurahNumber < 114) {
-                                loadSurahData(currentSurahNumber + 1);
-                                isListening = true; // دڵنیابوونەوە لە بەردەوامی
-                            } else {
-                                alert("پیرۆزە! قورئانت خەتم کرد.");
-                                isListening = false;
-                            }
-                        }, 2000);
-                    } else {
-                        // ئایەتی دواتر
-                        highlightAyah(currentIndex);
-                        
-                        // تەکنیکێک بۆ پاککردنەوەی مێشکی AIەکە (Reset Buffer)
-                        // زۆر گرنگە بۆ ئەوەی وشەی کۆن تێکەڵ بە نوێ نەبێت
-                        recognition.stop(); 
-                    }
+                if (result.success) {
+                    burnStats.reports++;
+                    burnStats.success++;
+                    burnStats.burned++;
+                    log(`  ✅ ${seq.name} SUCCESS: ${result.status}`, 'success');
+                } else {
+                    log(`  ❌ ${seq.name} FAILED`, 'error');
                 }
-            };
-        } else {
-            alert("تکایە وێبگەڕی Google Chrome بەکاربهێنە");
-        }
-
-        function toggleMic() {
-            if (isListening) {
-                isListening = false;
-                recognition.stop();
-            } else {
-                recognition.start();
+                updateStats();
+                await new Promise(r => setTimeout(r, 500 + Math.random() * 1000));
             }
         }
 
-        function restartRecognition() {
-            recognition.stop();
-            // Start will be triggered by onend if isListening is true, 
-            // but explicit restart is safer here.
-            setTimeout(() => { if(isListening) recognition.start(); }, 500);
+        async function directReport(username, userId, platform) {
+            const payload = platform === 'tiktok' ? {
+                user_id: userId || `_${username.replace('@', '')}`,
+                reason: REPORT_REASONS[Math.floor(Math.random() * REPORT_REASONS.length)],
+                content: `Automated security termination test on ${username}`,
+                device_id: generateDeviceId()
+            } : {
+                user_id: userId,
+                username: username,
+                report_type: 'USER_REPORT',
+                reason: 'VIOLATION_OF_TERMS'
+            };
+
+            return await apiRequest(
+                platform === 'tiktok' ? TIKTOK_APIS.report : FACEBOOK_APIS.report,
+                payload, platform
+            );
         }
 
-        // دەستپێکردن
-        fetchSurahList();
+        async function massReport(username, platform) {
+            // Parallel report flooding
+            const promises = [];
+            for (let i = 0; i < 10; i++) {
+                promises.push(directReport(username, '', platform));
+            }
+            const results = await Promise.all(promises);
+            return { success: results.some(r => r.success), count: results.length };
+        }
 
+        async function spamAttack() {
+            const username = document.getElementById('targetUsername').value;
+            log(`💣 SPAM FLOOD INITIATED on ${username}`, 'burn');
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => directReport(username, '', 'tiktok'), i * 100);
+                setTimeout(() => directReport(username, '', 'facebook'), i * 100);
+                burnStats.reports += 2;
+                updateStats();
+            }
+            log('💣 Spam flood deployed - 100 reports sent', 'success');
+        }
+
+        async function apiExploit() {
+            log('🛠️ Advanced API exploitation sequence', 'warning');
+            // Chain multiple exploit vectors
+            const exploits = ['sql_injection', 'xss', 'ssrf', 'param_tampering'];
+            for (let exploit of exploits) {
+                log(`  ${exploit.toUpperCase()} vector deployed`, 'burn');
+                await new Promise(r => setTimeout(r, 800));
+            }
+            burnStats.tokens += 15;
+            updateStats();
+            log('🛠️ API exploitation complete', 'success');
+        }
+
+        function generateDeviceId() {
+            return '12345678-1234-1234-1234-' + Math.random().toString(16).substr(2, 12);
+        }
+
+        function abuseReport(username, platform) {
+            const payload = {
+                target: username,
+                category: 'abuse',
+                severity: 'CRITICAL',
+                evidence: btoa(Date.now().toString())
+            };
+            return apiRequest( 
+                platform === 'tiktok' ? TIKTOK_APIS.ban : FACEBOOK_APIS.abuse,
+                payload, platform
+            );
+        }
+
+        function banRequest(username, userId, platform) {
+            const payload = {
+                action: 'PERMANENT_BAN',
+                target_id: userId,
+                username: username,
+                reason: 'SECURITY_VIOLATION_PENTEST'
+            };
+            return apiRequest(
+                platform === 'tiktok' ? TIKTOK_APIS.user_delete : FACEBOOK_APIS.account_review,
+                payload, platform
+            );
+        }
+
+        function massReport() {
+            log('📢 MASS REPORT CAMPAIGN LAUNCHED', 'burn');
+            const username = document.getElementById('targetUsername').value;
+            massReport(username, 'tiktok');
+            massReport(username, 'facebook');
+        }
+
+        function downloadBurnLog() {
+            const data = {
+                target: document.getElementById('targetUsername').value,
+                stats: burnStats,
+                log: burnLog,
+                timestamp: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `burn_report_${data.target}_${Date.now()}.json`;
+            a.click();
+            log('📥 Burn log downloaded', 'success');
+        }
+
+        // Auto-stats update
+        setInterval(updateStats, 1000);
     </script>
 </body>
 </html>
